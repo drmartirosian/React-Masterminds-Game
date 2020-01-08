@@ -1,10 +1,12 @@
 import React from 'react';
 import GuessPegs from './GuessPegs'
+import GuessScore from './GuessScore'
 
 const GuessRow = (props) => (
-    <div className='component'>
-        <p id={`GuessRow-${props.num}`}>GuessRow {props.num}</p>
+    <div className='component gamerow'>
+        <p id={`GuessRow-${props.num}`}>GuessRow #{props.num}</p>
         <GuessPegs />
+        <GuessScore />
     </div>
 );
 

@@ -2,7 +2,7 @@ import React from 'react';
 import GuessRow from './GuessRow'
 
 const GameBoard = (props) => (
-    <div className='component'>
+    <div className='component gameboard'>
         <p>GameBoard</p>
         <GuessRow num={2}/>
         <GuessRow num={1}/>

@@ -1,8 +1,8 @@
 import React from 'react';
 
 const NewGameButton = (props) => (
-    <div className='component'>
-        NewGameButton
+    <div className='component newgamebutton'>
+        NewGame
     </div>
 );
 
