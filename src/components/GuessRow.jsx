@@ -4,7 +4,7 @@ import GuessScore from './GuessScore'
 
 const GuessRow = (props) => (
     <div className='component gamerow'>
-        <p id={`GuessRow-${props.num}`}>GuessRow #{props.num}</p>
+        <p id={`GuessRow-${props.num}`}>Guess Row #{props.num}</p>
         <GuessPegs />
         <GuessScore />
     </div>
