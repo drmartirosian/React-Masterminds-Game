@@ -4,8 +4,11 @@ import GuessScore from './GuessScore'
 
 const GuessRow = (props) => (
     <div className='component gamerow'>
-        <p id={`GuessRow-${props.num}`}>Guess Row #{props.num}</p>
-        <GuessPegs />
+        <div>{props.rowIdx+1}</div>
+        <GuessPegs
+            colors={props.colors}
+            code={props.guess.code}
+        />
         <GuessScore />
     </div>
 );

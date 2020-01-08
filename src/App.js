@@ -19,13 +19,19 @@ class App extends Component {
     // in its properties
     this.state={
       selColorIdx: 0,
-      guesses: [],
+      guesses: [this.getNewGuess(), this.getNewGuess()],
       //to invoke a method in another method, it must be accessed via "this"...
       code: this.genCode(),
     }
   };
 
-
+  getNewGuess(){
+    return {
+      // code: [null, null, null, null], //for final build
+      code: [3, 2, 1, 0],
+      score: { perfect: 0, almost: 0, }, //for testing purposes
+    }
+  }
 
 
   genCode(){

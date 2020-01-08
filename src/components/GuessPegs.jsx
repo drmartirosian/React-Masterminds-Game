@@ -3,11 +3,10 @@ import GuessPeg from './GuessPeg'
 
 const GuessPegs = (props) => (
     <div className='component guesspegs'>
-        <p>GuessPegs</p>
-        <GuessPeg />
-        <GuessPeg />
-        <GuessPeg />
-        <GuessPeg />
+        <GuessPeg color={props.colors[props.code[0]]} />
+        <GuessPeg color={props.colors[props.code[1]]} />
+        <GuessPeg color={props.colors[props.code[2]]} />
+        <GuessPeg color={props.colors[props.code[3]]} />
     </div>
 );
 
