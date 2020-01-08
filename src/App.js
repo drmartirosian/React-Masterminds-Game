@@ -56,9 +56,15 @@ class App extends Component {
 
 
         <header className="App-header">React Mastermind</header>
-        <GameBoard />
+        <GameBoard
+          colors={colors}
+          guesses={this.state.guesses}
+        />
         <div className="sidebar">
-          <ColorPicker colors={colors}/>
+          <ColorPicker
+            colors={colors}
+            selColorIdx={this.state.selColorIdx}
+          />
           <GameTimer />
           <NewGameButton />
         </div>
