@@ -40,11 +40,11 @@ class App extends Component {
     return (
       <div className="App">
         <button
-        onClick={()=>
-          this.setState({
-            selColorIdx: ++this.state.selColorIdx % 4
-          })
-        }>
+          onClick={() => this.setState((state) => {
+            return {
+              selColorIdx: ++state.selColorIdx % 4
+            };
+          })}>
           Next Color
         </button>
 
@@ -60,12 +60,15 @@ class App extends Component {
           colors={colors}
           guesses={this.state.guesses}
         />
+
         <div className="sidebar">
           <ColorPicker
             colors={colors}
             selColorIdx={this.state.selColorIdx}
           />
+
           <GameTimer />
+
           <NewGameButton />
         </div>
         <footer className="component footer">Footer</footer>
