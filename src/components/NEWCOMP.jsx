@@ -9,4 +9,4 @@ function Newcomp(props) {
 }
 export default Newcomp;
 
-//Note: in App.js, add import Newcomp from './src/components/Newcomp';
+//Note: in App.js, add import NAME from './src/components/NAME';
