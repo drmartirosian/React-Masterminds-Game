@@ -20,6 +20,7 @@ class App extends Component {
     this.state={
       selColorIdx: 0,
       guesses: [],
+      //to invoke a method in another method, it must be accessed via "this"...
       code: this.genCode(),
     }
   };
@@ -38,6 +39,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <button
+        onClick={()=>
+          this.setState({
+            selColorIdx: ++this.state.selColorIdx % 4
+          })
+        }>
+          Next Color
+        </button>
+
+
         Selected color: {colors[this.state.selColorIdx]}
 
         <header className="App-header">React Mastermind</header>
