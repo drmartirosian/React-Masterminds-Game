@@ -35,9 +35,13 @@
 }
 .guesspeg{
   font-size: 10px;
+  flex-wrap: wrap;
+
 }
 .guesspegs{
   display: flex;
+  flex-wrap: wrap;
+
 }
 
 

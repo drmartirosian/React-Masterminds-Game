@@ -2,7 +2,9 @@ import React from 'react';
 
 const ColorPicker = (props) => (
     <div className="component colorpicker">
-        ColorPicker
+        {props.colors.map(color=>
+        <button key={color}>{color}</button>
+        )}
     </div>
 );
 

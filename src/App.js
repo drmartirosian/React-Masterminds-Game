@@ -49,12 +49,16 @@ class App extends Component {
         </button>
 
 
+
         Selected color: {colors[this.state.selColorIdx]}
+
+
+
 
         <header className="App-header">React Mastermind</header>
         <GameBoard />
         <div className="sidebar">
-          <ColorPicker />
+          <ColorPicker colors={colors}/>
           <GameTimer />
           <NewGameButton />
         </div>
