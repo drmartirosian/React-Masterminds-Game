@@ -12,21 +12,23 @@ const GuessScore = ({ score }) => {
       border: '2px solid',
       borderRadius: '50%'
     }
-// Add below the baseStyle object
-const pegStyles = {
-  'P': {
-    borderColor: 'black',
-    backgroundColor: 'black'
-  },
-  'A': {
-    borderColor: 'black',
-    backgroundColor: 'white'
-  },
-  'I': {
-    borderColor: 'white',
-    backgroundColor: 'lightgrey'
-  }
-};
+
+
+    // Add below the baseStyle object
+    const pegStyles = {
+      'P': {
+        borderColor: 'black',
+        backgroundColor: 'black'
+      },
+      'A': {
+        borderColor: 'black',
+        backgroundColor: 'white'
+      },
+      'I': {
+        borderColor: 'white',
+        backgroundColor: 'lightgrey'
+      }
+    };
 
 
     return (
