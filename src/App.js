@@ -9,9 +9,6 @@ const colors = ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD'];
 
 class App extends Component {
 
-
-
-
   constructor(){
     // super must be called before accessing 'this'
     super()
@@ -19,7 +16,7 @@ class App extends Component {
     // in its properties
     this.state={
       selColorIdx: 0,
-      guesses: [this.getNewGuess(), this.getNewGuess()],
+      guesses: [this.getNewGuess(),],
       //to invoke a method in another method, it must be accessed via "this"...
       code: this.genCode(),
     }
@@ -27,28 +24,29 @@ class App extends Component {
 
   getNewGuess(){
     return {
-      // code: [null, null, null, null], //for final build
-      code: [3, 2, 1, 0],
-      score: { perfect: 0, almost: 0, }, //for testing purposes
+      code: [null, null, null, null], //for final build
+      // code: [3, 2, 1, 0],
+      score: { 
+        perfect: 0, 
+        almost: 0, 
+      }, //for testing purposes
     }
   }
-
-
   genCode(){
     return new Array(4).fill().map(() => Math.floor(Math.random() * colors.length));
   }
-
-
-
   getWinTries() {
     // if winner, return num guesses, otherwise 0 (no winner)
     let lastGuess = this.state.guesses.length - 1;
     return this.state.guesses[lastGuess].score.perfect === 4 ? lastGuess + 1 : 0;
   }
-
+  handleColorSelection = (colorIdx) => {
+    this.setState({selColorIdx: colorIdx});
+  }
 
   render() {
     let winTries = this.getWinTries();
+
     return (
       <div className="App">
         <button
@@ -63,6 +61,7 @@ class App extends Component {
         Selected color: {colors[this.state.selColorIdx]}
 
         <header className="App-header">React Mastermind</header>
+
         <GameBoard
           colors={colors}
           guesses={this.state.guesses}
@@ -72,13 +71,14 @@ class App extends Component {
           <ColorPicker
             colors={colors}
             selColorIdx={this.state.selColorIdx}
+            handleColorSelection={this.handleColorSelection}
           />
-
           <GameTimer />
-
           <NewGameButton />
         </div>
+
         <footer>{(winTries ? `You Won in ${winTries} Guesses!` : 'Good Luck!')}</footer>
+
       </div>
     );
   }
