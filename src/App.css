@@ -1,53 +1,21 @@
 .App {
-  text-align: center;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
-.App-header {
-  background-color: #222;
+
+.App-header-footer {
   height: 50px;
   padding: 10px;
-  color: white;
-  font-size: 22px;
+  margin: 15px 0;
+  color: grey;
+  font-size: 18px;
   text-align: center;
-  width: 100%;
-}
-.footer{
-  width: 100%;
-}
-.component {
-  border: 1px solid red;
-  margin: 4px;
-  padding: 4px;
-}
-.colorpicker, .gametimer, .newgamebutton{
-  width: 100%;
-  height: 20%;
-}
-.colorpicker{
-  font-size: 5px;
-  display: flex;
-}
-.sidebar{
-  width: 25%
-}
-.gameboard{
-  width: 70%;
-}
-.gamerow{
-  display: flex;
-}
-.guesspeg{
-  font-size: 10px;
-  flex-wrap: wrap;
-
-}
-.guesspegs{
-  display: flex;
-  flex-wrap: wrap;
-
 }
 
-button:focus, .btn:focus {
-  outline: none;
+
+.App-controls {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  margin-left: 20px;
 }

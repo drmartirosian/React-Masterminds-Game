@@ -1,10 +1,12 @@
 import React from 'react';
-import styles from '../compcss/ScoreButton.module.css'
-
-// console.log(styles) //test if css is showing up
+import styles from '../compcss/ScoreButton.module.css';
 
 const ScoreButton = (props) => (
-  <button className={`${styles.button} btn btn-default`}>
+  <button
+    className={`${styles.button} btn btn-default`}
+    disabled={props.disabled}
+    onClick={props.handleScoreClick}
+  >
     ✔
   </button>
 );
