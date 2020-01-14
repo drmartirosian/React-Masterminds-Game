@@ -4,12 +4,23 @@ import GamePage from '../../pages/GamePage/GamePage';
 import { Route, Switch } from 'react-router-dom';
 import SettingsPage from '../Settings/Settings';
 
-const colors = ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD'];
+const colors = {
+  Easy: ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD'],
+  Moderate: ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD', '#B7D968'],
+  Difficult: ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD', '#B7D968', '#555E7B']
+};
 
 class App extends Component {
   constructor() {
     super();
-    this.state = this.getInitialState();
+    this.state = {...this.getInitialState(), difficulty: 'Easy'};
+  }
+  /*---------- Lifecycle Methods ----------*/
+  componentDidMount() {
+    console.log('App: componentDidMount');
+  }
+  componentDidUpdate() {
+    console.log('App: componentDidUpdate');
   }
 
   getInitialState() {
@@ -31,7 +42,9 @@ class App extends Component {
   }
 
   genCode() {
-    return new Array(4).fill().map(dummy => Math.floor(Math.random() * 4));
+    let numColors = this.state && colors[this.state.difficulty].length;
+    numColors = numColors || 4;
+    return new Array(4).fill().map(dummy => Math.floor(Math.random() * numColors));
   }
 
   getWinTries() {
@@ -40,6 +53,11 @@ class App extends Component {
     return this.state.guesses[lastGuess].score.perfect === 4 ? lastGuess + 1 : 0;
   }
 
+  handleDifficultyChange = (level) => {
+    // Use callback to ensure level is updated BEFORE calling handleNewGameClick
+    this.setState({difficulty: level}, () => this.handleNewGameClick());
+  }
+  
   handleColorSelection = (colorIdx) => {
     this.setState({selColorIdx: colorIdx});
   }
@@ -134,13 +152,13 @@ class App extends Component {
   render() {
     let winTries = this.getWinTries();
     return (
-      <div className="App">
-        <header className='App-header-footer'>R E A C T &nbsp;&nbsp;&nbsp;  M A S T E R M I N D</header>
+      <div>
+        <header className='header-footer'>R E A C T &nbsp;&nbsp;&nbsp;  M A S T E R M I N D</header>
         <Switch>
           <Route exact path='/' render={() =>
             <GamePage
               winTries={winTries}
-              colors={colors}
+              colors={colors[this.state.difficulty]}
               selColorIdx={this.state.selColorIdx}
               guesses={this.state.guesses}
               handleColorSelection={this.handleColorSelection}
@@ -149,8 +167,13 @@ class App extends Component {
               handleScoreClick={this.handleScoreClick}
             />
           } />
-          <Route exact path='/settings' render={props =>
-            <SettingsPage {...props} />
+          <Route exact path='/settings' render={props => 
+            <SettingsPage
+              {...props} 
+              colorsLookup={colors}
+              difficulty={this.state.difficulty}
+              handleDifficultyChange={this.handleDifficultyChange}
+            />
           } />
         </Switch>
       </div>

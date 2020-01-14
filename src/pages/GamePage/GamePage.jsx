@@ -6,9 +6,10 @@ import GameTimer from '../../components/GameTimer';
 import NewGameButton from '../../components/NewGameButton';
 // import './GamePage.css';
 
+
 const GamePage = (props) => {
   return (
-    <div className="App">
+    <div className="GamePage">
       <div className="flex-h align-flex-end">
         <GameBoard
           colors={props.colors}
@@ -16,7 +17,7 @@ const GamePage = (props) => {
           handlePegClick={props.handlePegClick}
           handleScoreClick={props.handleScoreClick}
         />
-        <div className='App-controls'>
+        <div className='GamePage-controls'>
           <ColorPicker
             colors={props.colors}
             selColorIdx={props.selColorIdx}
@@ -27,12 +28,13 @@ const GamePage = (props) => {
           <NewGameButton handleNewGameClick={props.handleNewGameClick}/>
         </div>
       </div>
-      <footer className='App-header-footer'>
+      <footer className='header-footer'>
         {(props.winTries ? `You Won in ${props.winTries} Guesses!` : 'Good Luck!')}
       </footer>
     </div>
   );
 
 };
+
 
 export default GamePage;
