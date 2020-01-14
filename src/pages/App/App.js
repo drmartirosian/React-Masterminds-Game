@@ -15,19 +15,14 @@ class App extends Component {
     super();
     this.state = {...this.getInitialState(), difficulty: 'Easy'};
   }
-  /*---------- Lifecycle Methods ----------*/
-  componentDidMount() {
-    console.log('App: componentDidMount');
-  }
-  componentDidUpdate() {
-    console.log('App: componentDidUpdate');
-  }
 
   getInitialState() {
     return {
       selColorIdx: 0,
       guesses: [this.getNewGuess()],
-      code: this.genCode()
+      code: this.genCode(),
+      // new state coming in!
+      elapsedTime: 0
     };
   }
 
@@ -51,6 +46,10 @@ class App extends Component {
     // if winner, return num guesses, otherwise 0 (no winner)
     let lastGuess = this.state.guesses.length - 1;
     return this.state.guesses[lastGuess].score.perfect === 4 ? lastGuess + 1 : 0;
+  }
+
+  handleTimerUpdate = () => {
+    this.setState((curState) => ({elapsedTime: ++curState.elapsedTime}));
   }
 
   handleDifficultyChange = (level) => {
@@ -161,10 +160,12 @@ class App extends Component {
               colors={colors[this.state.difficulty]}
               selColorIdx={this.state.selColorIdx}
               guesses={this.state.guesses}
+              elapsedTime={this.state.elapsedTime}
               handleColorSelection={this.handleColorSelection}
               handleNewGameClick={this.handleNewGameClick}
               handlePegClick={this.handlePegClick}
               handleScoreClick={this.handleScoreClick}
+              handleTimerUpdate={this.handleTimerUpdate}
             />
           } />
           <Route exact path='/settings' render={props => 
