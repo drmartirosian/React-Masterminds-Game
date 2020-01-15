@@ -1,6 +1,6 @@
 import React from 'react';
 import GuessPeg from './GuessPeg';
-import '../compcss/GuessPegs.module.css';
+import '../compcss/GuessPegs.css';
 
 const GuessPegs = (props) => (
   <div className='GuessPegs'>
