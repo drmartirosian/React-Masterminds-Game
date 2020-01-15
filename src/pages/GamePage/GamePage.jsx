@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import GameBoard from '../../components/GameBoard';
-import ColorPicker from '../../components/ColorPicker';
-import GameTimer from '../../components/GameTimer';
-import NewGameButton from '../../components/NewGameButton';
-// import './GamePage.css';
-
+import GameBoard from '../../components/GameBoard/GameBoard';
+import ColorPicker from '../../components/ColorPicker/ColorPicker';
+import GameTimer from '../../components/GameTimer/GameTimer';
+import NewGameButton from '../../components/NewGameButton/NewGameButton';
+import './GamePage.css';
 
 const GamePage = (props) => {
   return (
@@ -26,7 +25,9 @@ const GamePage = (props) => {
           <GameTimer
             elapsedTime={props.elapsedTime}
             handleTimerUpdate={props.handleTimerUpdate}
+            isTiming={props.isTiming}
           />
+          <Link className='btn btn-default GamePage-link-margin' to='/high-scores'>High Scores</Link>
           <Link className='btn btn-default GamePage-link-margin' to='/settings'>Difficulty</Link>
           <NewGameButton handleNewGameClick={props.handleNewGameClick}/>
         </div>
@@ -38,6 +39,5 @@ const GamePage = (props) => {
   );
 
 };
-
 
 export default GamePage;

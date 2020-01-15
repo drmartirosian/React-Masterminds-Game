@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import GamePage from '../../pages/GamePage/GamePage';
 import { Route, Switch } from 'react-router-dom';
-import SettingsPage from '../Settings/Settings';
+import GamePage from '../../pages/GamePage/GamePage';
+import SettingsPage from '../SettingsPage/SettingsPage';
+import HighScoresPage from '../HighScoresPage/HighScoresPage';
+import scoresService from '../../utils/scoresService';
 
 const colors = {
   Easy: ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD'],
@@ -13,7 +15,7 @@ const colors = {
 class App extends Component {
   constructor() {
     super();
-    this.state = {...this.getInitialState(), difficulty: 'Easy'};
+    this.state = {...this.getInitialState(), difficulty: 'Easy', scores: []};
   }
 
   getInitialState() {
@@ -21,8 +23,8 @@ class App extends Component {
       selColorIdx: 0,
       guesses: [this.getNewGuess()],
       code: this.genCode(),
-      // new state coming in!
-      elapsedTime: 0
+      elapsedTime: 0,
+      isTiming: true
     };
   }
 
@@ -47,6 +49,16 @@ class App extends Component {
     let lastGuess = this.state.guesses.length - 1;
     return this.state.guesses[lastGuess].score.perfect === 4 ? lastGuess + 1 : 0;
   }
+
+  isHighScore = (guessesCopy) => {
+    let lastScore = this.state.scores[this.state.scores.length - 1];
+    return (guessesCopy.length < lastScore.numGuesses || (
+      guessesCopy.length === lastScore.numGuesses &&
+      this.state.elapsedTime < lastScore.seconds
+    ));
+  }
+
+  /*--- Callback Methods ---*/
 
   handleTimerUpdate = () => {
     this.setState((curState) => ({elapsedTime: ++curState.elapsedTime}));
@@ -129,24 +141,37 @@ class App extends Component {
     let guessCopy = {...guessesCopy[currentGuessIdx]};
     let scoreCopy = {...guessCopy.score};
 
-    // Set scores
     scoreCopy.perfect = perfect;
     scoreCopy.almost = almost;
-
-    // Update the NEW guess with the NEW score object
     guessCopy.score = scoreCopy;
-
-    // Update the NEW guesses with the NEW guess object
     guessesCopy[currentGuessIdx] = guessCopy;
 
-    // Add a new guess if not a winner
-    if (perfect !== 4) guessesCopy.push(this.getNewGuess());
+    if (perfect === 4) {
+      // Chicken dinner - need to stop the timer!
+      this.setState(state => ({isTiming: false}), async function() {
+        // Do high-score logic in this callback
+        if ((this.state.scores.length < 20 || this.isHighScore(guessesCopy))) {
+          let initials = prompt('Congrats you have a top-20 score! Enter your initials: ').substr(0, 3);
+          await scoresService.create({ initials, numGuesses: guessesCopy.length, seconds: this.state.elapsedTime });
+          this.props.history.push('/high-scores');
+        }        
+      });
+    } else {
+      guessesCopy.push(this.getNewGuess());
+    }
 
-    // Finally, update the state with the NEW guesses array
     this.setState({
-      guesses: guessesCopy
+      guesses: guessesCopy,
+      // This is a great way to update isTiming
+      isTiming: perfect !== 4
     });
   }
+
+  handleUpdateScores = (scores) => {
+    this.setState({ scores });
+  }
+
+  /*--- Lifecycle Methods ---*/
 
   render() {
     let winTries = this.getWinTries();
@@ -161,6 +186,7 @@ class App extends Component {
               selColorIdx={this.state.selColorIdx}
               guesses={this.state.guesses}
               elapsedTime={this.state.elapsedTime}
+              isTiming={this.state.isTiming}
               handleColorSelection={this.handleColorSelection}
               handleNewGameClick={this.handleNewGameClick}
               handlePegClick={this.handlePegClick}
@@ -176,6 +202,12 @@ class App extends Component {
               handleDifficultyChange={this.handleDifficultyChange}
             />
           } />
+          <Route exact path='/high-scores' render={() => (
+            <HighScoresPage
+              scores={this.state.scores}
+              handleUpdateScores={this.handleUpdateScores}
+            />
+          )} />
         </Switch>
       </div>
     );
